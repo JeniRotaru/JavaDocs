@@ -9,7 +9,7 @@ import ro.teamnet.zth.api.annotations.Id;
 public class Job {
 
     @Id( name = "job_id")
-    private Long jobId;
+    private String jobId;
     @Column(name = "job_title")
     private String jobTitle;
     @Column(name = "min_salary")
@@ -27,7 +27,7 @@ public class Job {
         return jobTitle;
     }
 
-    public Long getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
@@ -44,7 +44,7 @@ public class Job {
                 '}';
     }
 
-    public void setJobId(Long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 
