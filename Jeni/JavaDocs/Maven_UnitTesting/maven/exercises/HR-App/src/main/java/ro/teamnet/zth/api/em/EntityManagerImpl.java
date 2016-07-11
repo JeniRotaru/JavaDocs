@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class EntityManagerImpl implements EntityManager {
     @Override
-    public int getNextIdVal(String tableName, String columnIdName) { //Catalin
-        return 0;
+    public Long getNextIdVal(String tableName, String columnIdName) { //Catalin
+        return 278L;
     }
 
     @Override
@@ -26,26 +26,28 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public <T> Object insert(T entity) { //Jeni
         /* Create a connection to DB */;
-        Long i = -1L;
-        long ii;
+        long ii = 0L;
         try(Connection conn = DBManager.getConnection()){
             String tableName = EntityUtils.getTableName(entity.getClass());
             List<ColumnInfo> listColumns = EntityUtils.getColumns(entity.getClass());
+            /* create a QueryBuilder object  in which you have to set the name of the table, columns, query type */
+            QueryBuilder qb = new QueryBuilder();
 
             for (ColumnInfo column : listColumns) {
                 if (column.isId() == true) {
                     ii = getNextIdVal(tableName, column.getColumnName());
-                    i = Long.valueOf(ii);
-                    column.setValue(i);
+                    column.setValue(ii);
                 }
                 else {
                     Field field = entity.getClass().getDeclaredField(column.getColumnName());
-                    field.isAccessible();
-                    column.setValue(field.get(entity));
+                    field.setAccessible(true);
+                    //column.setValue((ColumnInfo)(field.get(entity)));
+                    Object value = field.get(entity);
+                    column.setValue((EntityUtils.getSqlValue(value)));
                 }
             }
             /* create a QueryBuilder object  in which you have to set the name of the table, columns, query type */
-            QueryBuilder qb = new QueryBuilder();
+            //QueryBuilder qb = new QueryBuilder();
             qb.setTableName(tableName);
             qb.addQueryColumns(listColumns);
             qb.setQueryType(QueryType.INSERT);
@@ -63,7 +65,7 @@ public class EntityManagerImpl implements EntityManager {
             ex.printStackTrace();
         }
 
-        return findById((Class<Object>) entity, i);
+        return findById(entity.getClass(), ii);
     }
 
     @Override

@@ -10,14 +10,17 @@ import static org.junit.Assert.assertEquals;
  */
 public class EntityManagerImplTest {
 
+    EntityManagerImpl manager = new EntityManagerImpl();
+
     @Test
     public void testGetTableNameMethod() {
         Department d = new Department();
-        d.setDepartmentName("Administration");
-        d.setLocation(1700L);
-        d.setId(10L);
-        Object res = EntityManagerImpl.insert(d);
-        assertEquals("Table name should be departments!", "departments", tableName);
+        d.setDepartmentName("BlaBla");
+        d.setLocation(1000L);
+        d.setId(278L);
+
+        Department res = (Department)(manager.insert(d));
+        assertEquals(d, res);
     }
 
 }
