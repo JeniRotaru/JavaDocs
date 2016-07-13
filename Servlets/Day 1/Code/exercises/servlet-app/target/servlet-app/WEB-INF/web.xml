@@ -28,6 +28,16 @@
         <url-pattern>/zerotohero</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>InfoHttpServlet</servlet-name>
+        <servlet-class>ro.teamnet.zth.web.InfoHttpServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>InfoHttpServlet</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
+
     <!--Welcome file-->
     <welcome-file-list>
         <welcome-file>/index.html</welcome-file>
