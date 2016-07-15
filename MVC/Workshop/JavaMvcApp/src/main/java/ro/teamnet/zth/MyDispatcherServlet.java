@@ -1,7 +1,11 @@
 package ro.teamnet.zth;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import ro.teamnet.zth.api.annotations.MyController;
 import ro.teamnet.zth.api.annotations.MyRequestMethod;
+import ro.teamnet.zth.api.annotations.MyRequestParam;
 import ro.teamnet.zth.fmk.AnnotationScanUtils;
 import ro.teamnet.zth.fmk.MethodAttributes;
 
@@ -13,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +55,7 @@ public class MyDispatcherServlet extends HttpServlet {
                             methodAttributes.setControllerClass(controller.getName());
                             methodAttributes.setMethodType(methodAnnotation.methodType());
                             methodAttributes.setMethodName(controllerMethod.getName());
+                            methodAttributes.setParameterTypes(controllerMethod.getParameterTypes());
                             /* Adauga inregistrarea in registru */
                             registru.put(urlPath, methodAttributes);
                         }
@@ -69,20 +75,42 @@ public class MyDispatcherServlet extends HttpServlet {
         if (methodAttributes == null) //URL-ul nu poate fi procesat;
             return "E null!";
 
+        /* Obtinerea parametrului din browser */
+        //String parameter = req.getParameter("id");
+
         String controllerName = methodAttributes.getControllerClass();
         try {
             Class <?> controllerClass = Class.forName(controllerName);
             try {
                 Object controllerInstance = controllerClass.newInstance();
                 try {
-                    Method method = controllerClass.getMethod(methodAttributes.getMethodName());
+                    Method method = controllerClass.getMethod(methodAttributes.getMethodName(), methodAttributes.getParameterTypes());
+                    Parameter[] parameters = method.getParameters();
+                    List<Object> parameterValues = new ArrayList<>();
+                    for (Parameter parameterI : parameters) {
+                        if (parameterI.isAnnotationPresent(MyRequestParam.class)) {
+                            MyRequestParam annotation = parameterI.getAnnotation(MyRequestParam.class);
+                            String name = annotation.name();
+                            String requestParamValue = req.getParameter(name);
+                            Class<?> type = parameterI.getType();
+                            Object requestParamObject = new ObjectMapper().readValue(requestParamValue, type);
+                            parameterValues.add(requestParamObject);
+                        }
+                    }
                     try {
-                        Object r = method.invoke(controllerInstance);
+                        //Long id = Long.valueOf(parameter);
+                        Object r = method.invoke(controllerInstance, parameterValues.toArray());
                         return r;
                     } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
                 } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (JsonParseException e) {
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             } catch (InstantiationException e) {
@@ -109,8 +137,11 @@ public class MyDispatcherServlet extends HttpServlet {
     }
 
     public void reply(Object r, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String res = objectMapper.writeValueAsString(r);
+
         PrintWriter out = resp.getWriter();
-        out.printf(r.toString());
+        out.printf(res);
     }
 
     public void sendExceptionError(Exception e, HttpServletRequest req, HttpServletResponse resp) {
