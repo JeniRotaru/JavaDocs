@@ -1,3 +1,4 @@
+ro\teamnet\zth\appl\controller\JobController.class
 ro\teamnet\zth\api\database\DBManager.class
 ro\teamnet\zth\appl\domain\Department.class
 ro\teamnet\zth\api\annotations\MyController.class
@@ -5,6 +6,7 @@ ro\teamnet\zth\api\em\QueryType.class
 ro\teamnet\zth\appl\controller\DepartmentController.class
 ro\teamnet\zth\appl\controller\EmployeeController.class
 ro\teamnet\zth\appl\domain\Employee.class
+ro\teamnet\zth\appl\controller\LocationController.class
 ro\teamnet\zth\appl\dao\EmployeeDao.class
 ro\teamnet\zth\appl\dao\DepartmentDao.class
 ro\teamnet\zth\api\database\DBProperties.class

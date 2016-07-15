@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="ro.teamnet.zth.api.em.EntitiyManagerImplTest" time="0.278" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="ro.teamnet.zth.api.em.EntitiyManagerImplTest" time="0.371" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2016.1.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,10 +64,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="aTestFindById" time="0.026"/>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="bTestFindAll" time="0.03"/>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="cTestInsert" time="0.095"/>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="dTestUpdate" time="0.045"/>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="eTestDelete" time="0.048"/>
-  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="fTestFindByParams" time="0.034"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="aTestFindById" time="0.061"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="bTestFindAll" time="0.037"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="cTestInsert" time="0.134"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="dTestUpdate" time="0.042"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="eTestDelete" time="0.074"/>
+  <testcase classname="ro.teamnet.zth.api.em.EntitiyManagerImplTest" name="fTestFindByParams" time="0.023"/>
 </testsuite>

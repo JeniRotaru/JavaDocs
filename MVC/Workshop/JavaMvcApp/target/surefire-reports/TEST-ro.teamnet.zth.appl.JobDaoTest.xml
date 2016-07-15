@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="ro.teamnet.zth.appl.JobDaoTest" time="0.302" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="ro.teamnet.zth.appl.JobDaoTest" time="0.311" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2016.1.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,8 +64,8 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="aTestInsertJob" time="0.057"/>
-  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="bTestUpdateJob" time="0.073"/>
-  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="cTestDeleteJob" time="0.053"/>
-  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="dGetAllJobs" time="0.119"/>
+  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="aTestInsertJob" time="0.059"/>
+  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="bTestUpdateJob" time="0.079"/>
+  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="cTestDeleteJob" time="0.043"/>
+  <testcase classname="ro.teamnet.zth.appl.JobDaoTest" name="dGetAllJobs" time="0.13"/>
 </testsuite>
