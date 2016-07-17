@@ -1,11 +1,14 @@
 package ro.teamnet.zth.appl.controller;
 
+import org.json.*;
 import ro.teamnet.zth.api.annotations.MyController;
 import ro.teamnet.zth.api.annotations.MyRequestMethod;
 import ro.teamnet.zth.api.annotations.MyRequestParam;
 import ro.teamnet.zth.appl.domain.Employee;
 import ro.teamnet.zth.appl.service.EmployeeServiceImpl;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,11 +34,21 @@ public class EmployeeController {
         employeesList.deleteOneEmployee(id);
     }
 
+    // http://docs.oracle.com/javaee/7/api/javax/json/JsonObject.html
     @MyRequestMethod(urlPath = "/save", methodType = "POST")
-    public void saveOneEmployee(@MyRequestParam(name="firstName") String firstName, @MyRequestParam(name="lastName") String lastName) {
-        Employee employee = new Employee();
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employeesList.saveOneEmployee(employee);
+    public Employee saveOneEmployee(@MyRequestParam(name="employee") JSONObject param) {
+        Employee employeeNew = new Employee();
+        String firstName = param.getString("firstName");
+        String lastName = param.getString("lastName");
+        String email = param.getString("email");
+        String phoneNumber = param.getString("phoneNumber");
+        String jobId = param.getString("jobId");
+        BigDecimal salary;
+        BigDecimal commissionPct;
+        Long managerId;
+        Long departmentId;
+        Date hireDate;
+        employeeNew.setFirstName(firstName);
+        return employeesList.saveOneEmployee(employeeNew);
     }
 }
