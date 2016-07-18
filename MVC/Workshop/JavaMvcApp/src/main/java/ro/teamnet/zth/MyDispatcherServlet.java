@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import ro.teamnet.zth.api.annotations.MyController;
 import ro.teamnet.zth.api.annotations.MyRequestMethod;
+import ro.teamnet.zth.api.annotations.MyRequestObject;
 import ro.teamnet.zth.api.annotations.MyRequestParam;
 import ro.teamnet.zth.fmk.AnnotationScanUtils;
 import ro.teamnet.zth.fmk.MethodAttributes;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -88,13 +90,22 @@ public class MyDispatcherServlet extends HttpServlet {
                     Parameter[] parameters = method.getParameters();
                     List<Object> parameterValues = new ArrayList<>();
                     for (Parameter parameterI : parameters) {
+                        Class<?> type = parameterI.getType();
                         if (parameterI.isAnnotationPresent(MyRequestParam.class)) {
                             MyRequestParam annotation = parameterI.getAnnotation(MyRequestParam.class);
                             String name = annotation.name();
                             String requestParamValue = req.getParameter(name);
-                            Class<?> type = parameterI.getType();
-                            Object requestParamObject = new ObjectMapper().readValue(requestParamValue, type);
+                            Object requestParamObject;
+                            if (type.equals(String.class))
+                                requestParamObject = requestParamValue;
+                            else
+                                requestParamObject = new ObjectMapper().readValue(requestParamValue, type);
                             parameterValues.add(requestParamObject);
+                        }
+                        else if (parameterI.isAnnotationPresent(MyRequestObject.class)) {
+                            BufferedReader br = req.getReader();
+                            Object o = new ObjectMapper().readValue(br, type);
+                            parameterValues.add(o);
                         }
                     }
                     try {
@@ -179,5 +190,11 @@ public class MyDispatcherServlet extends HttpServlet {
         //instructiuni de delegare
         dispatchReply("POST", req, resp);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        dispatchReply("DELETE", req, resp);
+    }
+
 
 }

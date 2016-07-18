@@ -1,14 +1,13 @@
 package ro.teamnet.zth.appl.controller;
 
-import org.json.*;
+//import org.json.*;
 import ro.teamnet.zth.api.annotations.MyController;
 import ro.teamnet.zth.api.annotations.MyRequestMethod;
 import ro.teamnet.zth.api.annotations.MyRequestParam;
 import ro.teamnet.zth.appl.domain.Employee;
+import ro.teamnet.zth.appl.service.EmployeeService;
 import ro.teamnet.zth.appl.service.EmployeeServiceImpl;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +16,13 @@ import java.util.List;
 @MyController(urlPath = "/employees")
 public class EmployeeController {
 
-    private final EmployeeServiceImpl employeesList = new EmployeeServiceImpl();
+    private final EmployeeService employeesList = new EmployeeServiceImpl(); //=>?!
+//    private final EmployeeService employeesList;
+
+
+//    public EmployeeController(EmployeeService employeesList) {
+//        this.employeesList = employeesList;
+//    }
 
     @MyRequestMethod(urlPath = "/all")
     public List<Employee> getAllEmployees() {
@@ -35,7 +40,7 @@ public class EmployeeController {
     }
 
     // http://docs.oracle.com/javaee/7/api/javax/json/JsonObject.html
-    @MyRequestMethod(urlPath = "/save", methodType = "POST")
+    /*@MyRequestMethod(urlPath = "/save", methodType = "POST")
     public Employee saveOneEmployee(@MyRequestParam(name="employee") JSONObject param) {
         Employee employeeNew = new Employee();
         String firstName = param.getString("firstName");
@@ -50,5 +55,5 @@ public class EmployeeController {
         Date hireDate;
         employeeNew.setFirstName(firstName);
         return employeesList.saveOneEmployee(employeeNew);
-    }
+    }*/
 }
